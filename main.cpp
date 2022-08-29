@@ -35,8 +35,8 @@ int main()
     int playerTexHeight = playerTex.height;
 
     Vector2 playerPosition {
-        windowWidth / 2 - playerTexWidth / 2,
-        windowHeight / 2 - playerTexHeight / 2,
+        windowWidth / 2.0f - playerTexWidth / 2.0f,
+        windowHeight / 2.0f - playerTexHeight / 2.0f,
     };
 
     float playerRightLeft = 1.0f;
