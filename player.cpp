@@ -5,20 +5,24 @@ Player::Player(int windowWidth, int windowHeight) :
     windowWidth(windowWidth),
     windowHeight(windowHeight)
 {
+    // init textures
     textureIdle = LoadTexture("./assets/topdown_shooter_assets/sPlayerIdle_strip4.png");
     textureRun = LoadTexture("./assets/topdown_shooter_assets/sPlayerRun_strip7.png");
     texture = textureIdle;
 
+    // init vars about animation
     frameMaxIdle = 4;
     frameMaxRun = 7;
     frameMax = frameMaxIdle;
 
+    // init texture size
     textureWidth = textureIdle.width / frameMax;
     textureHeight = textureIdle.height;
 }
 
 Player::~Player()
 {
+    // free textures
     UnloadTexture(textureIdle);
     UnloadTexture(textureRun);
 }
@@ -42,7 +46,7 @@ void Player::tick(float deltaTime)
         // move coordinate
         position = Vector2Add(position, velocity);
 
-        // bound check
+        // X bound check
         if (position.x < 0.0f)
         {
             position.x = 0.0f;
@@ -52,6 +56,7 @@ void Player::tick(float deltaTime)
             position.x = windowWidth - textureWidth * scale;
         }
 
+        // Y bound check
         if (position.y < 0.0f)
         {
             position.y = 0.0f;
@@ -65,14 +70,14 @@ void Player::tick(float deltaTime)
         if (velocity.x < -0.001f) { forward = -1.0f; }
         else if (velocity.x > 0.001f) { forward = 1.0f; }
 
-        // select idle texture
+        // set run texture
         texture = textureRun;
         frameMax = frameMaxRun;
         textureWidth = textureWidthRun;
     }
     else
     {
-        // select run texture
+        // set idle texture
         texture = textureIdle;
         frameMax = frameMaxIdle;
         textureWidth = textureWidthRun;
@@ -87,6 +92,7 @@ void Player::tick(float deltaTime)
     }
 
     // draw player
+    // rec in texture, it represent position on texture.
     Rectangle sourceRec {
         static_cast<float>(textureWidth) * frame,
         0.0f,
@@ -94,6 +100,7 @@ void Player::tick(float deltaTime)
         static_cast<float>(textureHeight),
     };
 
+    // rec in screen, it represent position on screen.
     Rectangle destRec {
         position.x,
         position.y,
@@ -102,6 +109,8 @@ void Player::tick(float deltaTime)
     };
 
     DrawTexturePro(texture, sourceRec, destRec, Vector2{}, 0.0f, WHITE);
+
+    // for debug
     DrawRectangleLines(
         position.x,
         position.y,

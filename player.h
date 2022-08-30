@@ -8,6 +8,8 @@ class Player
 public:
     Player(int windowWidth, int windowHeight);
     ~Player();
+
+    // update player on every frame
     void tick(float deltaTime);
 private:
     // window infomation
@@ -19,6 +21,7 @@ private:
     Texture2D textureRun;
     Texture2D texture;
 
+    // texture rec size
     int textureWidthIdle;
     int textureWidthRun;
     int textureWidth;
@@ -41,8 +44,6 @@ private:
     float forward {1.0f};
     // movement
     float moveSpeed {3.0f};
-
-    int calTextureWidth();
 };
 
 #endif //__PLAYER_H__
