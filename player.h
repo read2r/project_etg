@@ -36,7 +36,8 @@ private:
     float frameUpdateTime {1.0f / 12.0f};
 
     // transform
-    Vector2 position {0.0f, 0.0f};
+    // position on screen
+    Vector2 position {};
     // scale
     float scale {1.0f};
     // left forward = -1.0f
@@ -44,6 +45,8 @@ private:
     float forward {1.0f};
     // movement
     float moveSpeed {3.0f};
+
+    Vector2 GetCenter();
 };
 
 #endif //__PLAYER_H__

@@ -21,6 +21,7 @@ Player::Player(int windowWidth, int windowHeight) :
     textureWidth = textureWidthIdle;
     textureHeight = textureIdle.height;
 
+    // init tranform
     // init position
     position = {
         (windowWidth - textureWidth) / 2.0f,
@@ -74,10 +75,6 @@ void Player::tick(float deltaTime)
             position.y = windowHeight - textureHeight * scale;
         }
 
-        // set playerRightLeft
-        if (velocity.x < -0.001f) { forward = -1.0f; }
-        else if (velocity.x > 0.001f) { forward = 1.0f; }
-
         // set run texture
         texture = textureRun;
         frameMax = frameMaxRun;
@@ -90,6 +87,11 @@ void Player::tick(float deltaTime)
         frameMax = frameMaxIdle;
         textureWidth = textureWidthIdle;
     }
+
+    // set forward
+    // follow mouse position
+    if (GetCenter().x > GetMousePosition().x) { forward = -1.0f; }
+    else { forward = 1.0f; }
 
     // update player animation frame
     frameRuningTime += deltaTime;
@@ -127,4 +129,12 @@ void Player::tick(float deltaTime)
         textureHeight * scale,
         RED
     );
+}
+
+Vector2 Player::GetCenter()
+{
+    return Vector2 {
+        position.x + textureWidth / 2.0f,
+        position.y + textureHeight / 2.0f 
+    };
 }
