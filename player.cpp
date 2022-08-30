@@ -16,8 +16,16 @@ Player::Player(int windowWidth, int windowHeight) :
     frameMax = frameMaxIdle;
 
     // init texture size
-    textureWidth = textureIdle.width / frameMax;
+    textureWidthIdle = textureIdle.width / frameMaxIdle;
+    textureWidthRun = textureRun.width / frameMaxRun;
+    textureWidth = textureWidthIdle;
     textureHeight = textureIdle.height;
+
+    // init position
+    position = {
+        (windowWidth - textureWidth) / 2.0f,
+        (windowHeight - textureHeight) / 2.0f
+    };
 }
 
 Player::~Player()
@@ -80,7 +88,7 @@ void Player::tick(float deltaTime)
         // set idle texture
         texture = textureIdle;
         frameMax = frameMaxIdle;
-        textureWidth = textureWidthRun;
+        textureWidth = textureWidthIdle;
     }
 
     // update player animation frame
@@ -108,6 +116,7 @@ void Player::tick(float deltaTime)
         textureHeight * scale
     };
 
+    // draw texture
     DrawTexturePro(texture, sourceRec, destRec, Vector2{}, 0.0f, WHITE);
 
     // for debug
